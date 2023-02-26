@@ -19,12 +19,16 @@ CREATE TABLE pessoas(
   email VARCHAR(100) NOT NULL UNIQUE,
   telefone VARCHAR(15),
   senha VARCHAR(100) NOT NULL,
-  sexo varchar(10)
+  sexo varchar(10),
+   nivel ENUM('cliente', 'administrador') DEFAULT 'cliente'
   
 ) Engine=InnoDB;
+UPDATE pessoas SET nivel = 'administrador' WHERE id = '';
 
+select * from pessoas;
 
-select * from pessoas;				
+				
 
 drop table pessoas;
+
 

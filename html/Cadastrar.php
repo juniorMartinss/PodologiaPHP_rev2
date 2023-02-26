@@ -1,12 +1,12 @@
 <?php
-    namespace SitePodologiaPHP\html;
+    namespace PodologiaPHP_rev2\html;
 
     require_once("../DAO/Conexao.php");
     require_once("../DAO/CadastroPessoas.php");
 
 
-    use SitePodologiaPHP\DAO\Conexao;
-    use SitePodologiaPHP\DAO\CadastroPessoas;
+    use PodologiaPHP_rev2\DAO\Conexao;
+    use PodologiaPHP_rev2\DAO\CadastroPessoas;
 
 ?>
 
@@ -18,8 +18,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../CSS/Estilo.css">
         <title>Cadastrar</title>
+        
     </head>
     <body>  
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
         <form method="POST">
       
             <div class="tela-box">
@@ -81,17 +84,27 @@
                         </div>
 
                         <div class="input-group">
-                    <button>Cadastrar</button>
+                <button onclick="abrirAlerta()">Cadastrar</button>
                 </div>
+                
+                <script>
+                    function abrirAlerta(){
+                        swal("Sucesso!", "Cadastro Efetuado com Sucesso!", "success");
+                }
+                </script>
             
             <?php
-                if($_POST['tNome'] != "" && $_POST['tCpf'] != "" && $_POST['tData'] != "" && $_POST['tEmail'] != "" && $_POST['tTelefone'] != "" && $_POST['tSenha'] != "" && $_POST['tSexo'] != ""){
-                    $conexao = new Conexao();
-                    $cad     = new CadastroPessoas();
-                    echo $cad->cadastrar($conexao, "pessoas",$_POST['tNome'],$_POST['tCpf'], $_POST['tData'], $_POST['tEmail'], $_POST['tTelefone'], $_POST['tSenha'], $_POST['tSexo']);
-                    return;
+
+                if(isset($_POST['tNome'], $_POST['tCpf'], $_POST['tData'], $_POST['tEmail'], $_POST['tTelefone'], $_POST['tSenha'], $_POST['tSexo'])) {
+                    if($_POST['tNome'] != "" && $_POST['tCpf'] != "" && $_POST['tData'] != "" && $_POST['tEmail'] != "" && $_POST['tTelefone'] != "" && $_POST['tSenha'] != "" && $_POST['tSexo'] != "") {
+                        $conexao = new Conexao();
+                        $cad = new CadastroPessoas();
+                        echo $cad->cadastrar($conexao, "pessoas",$_POST['tNome'],$_POST['tCpf'], $_POST['tData'], $_POST['tEmail'], $_POST['tTelefone'], $_POST['tSenha'], $_POST['tSexo']);
+                        return;
+                    }
+                    echo "Erro, preencha o campo!";
                 }
-                echo "Erro, preencha o campo!";
+            
             ?>
         </form>
     </body>
